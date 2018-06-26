@@ -1,16 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { BoardModule } from './board/board.module';
+import { BoardComponent } from './board/board/board.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+  BrowserModule,
+  FormsModule,
+  HttpModule,
+  BrowserAnimationsModule,
+  BoardModule,
+  RouterModule.forRoot([
+    {
+      path: '',
+      component: BoardComponent,
+    },
+  ]),
+  ],
+  declarations: [
+    AppComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    BoardComponent
+  ]
 })
 export class AppModule { }
