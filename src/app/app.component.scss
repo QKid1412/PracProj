@@ -1,4 +1,20 @@
-h1{
+.roof-top{
+  top:0;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 260px 180px 260px;
+  border-color: transparent transparent #503616 transparent;
+}
+
+h1 {
+  margin: auto;
+  width: 100%;
+  top: 30px;
+  left: 0;
   font-size: 3rem;
   text-align: center;
+  position: absolute;
+  display: inline;
 }

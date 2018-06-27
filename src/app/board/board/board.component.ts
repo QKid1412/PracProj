@@ -387,6 +387,44 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  newGame() {
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        this.field[rowIndex][tileIndex] = null;
+      }
+    }
+    this.resetAnimations();
+    this.fillRandom();
+    this.fillRandom();
+    this.render(false);
+  }
+
+  bombAttack() {
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (this.field[rowIndex][tileIndex] !== null && this.field[rowIndex][tileIndex] === 2){
+            this.field[rowIndex][tileIndex] = null;
+        }
+      }
+    }
+
+    let empty = true;
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (this.field[rowIndex][tileIndex] !== null){
+            empty = false;
+        }
+      }
+    }
+
+    if (empty){
+      this.fillRandom();
+      this.fillRandom();
+    }
+    this.resetAnimations();
+    this.render(false);
+  }
+
   private mergeTiles(field: BoardState, rowIndex: number, tileIndex: number, direction: Direction) {
     const size = field.length;
     const tileValue = field[rowIndex][tileIndex];
