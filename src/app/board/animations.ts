@@ -1,4 +1,5 @@
-import { animate, AnimationMetadata, keyframes, state, style, transition, trigger, } from '@angular/animations';
+import { Component, OnInit, HostListener, AfterViewChecked, Input } from '@angular/core';
+import { animate, AnimationMetadata, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 export function compile(size: number, duration: number) {
   return function () {

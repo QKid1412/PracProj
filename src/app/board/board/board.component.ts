@@ -1,13 +1,17 @@
-import { Component, OnInit, HostListener, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewChecked, Input } from '@angular/core';
 import { animate, AnimationMetadata, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { BehaviorSubject } from 'rxjs';
+
+//import { compile } from '../animations'
 
 export type BoardState = number[][];
 export type AnimationState = Animation[][];
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
-export type Animation = 'base' | 'moveLeft' | 'moveRight' | 'moveUp' | 'moveDown';
-export const AnimationDuration = 300;
+export type Animation = string; //'base' | 'moveLeft' | 'moveRight' | 'moveUp' | 'moveDown';
+export const AnimationDuration = 200;
+
+const size = 4;
 
 @Component({
   selector: 'fm-board',
@@ -22,36 +26,117 @@ export const AnimationDuration = 300;
       state('moveLeft',   style({ })),
       state('moveRight',   style({ })),
       transition('base => updated', [
-        animate(100, keyframes([
-          style({transform: 'scale(1)',   offset: 0}),
-          style({transform: 'scale(1.1)', offset: 0.3}),
-          style({transform: 'scale(1)',  offset: 1.0})
-        ]))
-      ]),
-      transition('base => moveLeft', [
         animate(AnimationDuration, keyframes([
-          style({transform: 'translateX(0)',   offset: 0}),
-          style({transform: 'translateX(-100%)', offset: 1}),
+          style({transform: 'scale(1)', zIndex: 1,  offset: 0}),
+          style({transform: 'scale(1.1)', zIndex: 1,  offset: 0.3}),
+          style({transform: 'scale(1)',  zIndex: 1,  offset: 1.0})
         ]))
       ]),
-      transition('base => moveRight', [
+
+      transition('base => moveLeft-1', [
         animate(AnimationDuration, keyframes([
-          style({transform: 'translateX(0)',   offset: 0}),
-          style({transform: 'translateX(100%)', offset: 1}),
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(-100%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(-100%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(-100%) scale(1)', zIndex: 1,  offset: 1}),
         ]))
       ]),
-      transition('base => moveUp', [
+      transition('base => moveLeft-2', [
         animate(AnimationDuration, keyframes([
-          style({transform: 'translateY(0)',   offset: 0}),
-          style({transform: 'translateY(-100%)', offset: 1}),
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(-200%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(-200%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(-200%) scale(1)', zIndex: 1,  offset: 1}),
         ]))
       ]),
-      transition('base => moveDown', [
+      transition('base => moveLeft-3', [
         animate(AnimationDuration, keyframes([
-          style({transform: 'translateY(0)',   offset: 0}),
-          style({transform: 'translateY(+100%)', offset: 1}),
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(-300%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(-300%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(-300%) scale(1)', zIndex: 1,  offset: 1}),
         ]))
       ]),
+
+
+      transition('base => moveRight-1', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(100%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(100%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(100%) scale(1)', zIndex: 1,  offset: 1}),
+        ]))
+      ]),
+      transition('base => moveRight-2', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(200%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(200%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(200%) scale(1)', zIndex: 1,  offset: 1}),
+        ]))
+      ]),
+      transition('base => moveRight-3', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(300%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(300%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(300%) scale(1)', zIndex: 1,  offset: 1}),
+        ]))
+      ]),
+
+
+      transition('base => moveUp-1', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(-100%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(-100%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(-100%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+      transition('base => moveUp-2', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(-200%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(-200%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(-200%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+      transition('base => moveUp-3', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(-300%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(-300%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(-300%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+
+
+      transition('base => moveDown-1', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(100%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(100%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(100%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+      transition('base => moveDown-2', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(200%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(200%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(200%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+      transition('base => moveDown-3', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(200%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(200%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(200%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
+
+
     ])
   ]
 })
@@ -73,16 +158,15 @@ export class BoardComponent implements OnInit {
     this.moveLeft();
   };
 
-  private size = 4;
   private baseValue = 2;
 
-  private grid = new Array(this.size).fill(new Array(this.size).fill(null));
+  private grid = new Array(size).fill(new Array(size).fill(null));
 
-  //private state$ = new BehaviorSubject<BoardState>(new Array(this.size).fill(null).map(_ => new Array(this.size).fill(null)));
-  private field: BoardState = new Array(this.size).fill(null).map(_ => new Array(this.size).fill(null));
+  //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
+  private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
   private fieldView: BoardState;
 
-  private animations: AnimationState; // = new Array(this.size).fill(null).map(_ => new Array(this.size).fill('base'));
+  private animations: AnimationState; // = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
   private animationsView: AnimationState;
 
   tileWidth = 100;
@@ -128,99 +212,125 @@ export class BoardComponent implements OnInit {
     //this.state$.next(field);
   }
 
-  moveUp() {
 
+  moveUp() {
+    let moved = false;
     // row by row from top to bottom
-    for (let rowIndex = 0; rowIndex < this.size; rowIndex++){
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
       // left to right scan
-      for (let tileIndex = 0; tileIndex < this.size; tileIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
         // move to top
         if (this.field[rowIndex][tileIndex] !== null ){
-          for (let searchIndex = rowIndex; searchIndex > 0; searchIndex--){
-            if (this.mergeTiles(this.field, searchIndex, tileIndex, 'top')) {
-              if (searchIndex === tileIndex) {
-                this.animations[rowIndex][tileIndex] = 'moveUp';
+          for (let searchIndex = rowIndex; searchIndex >= 0; searchIndex--){
+            let mergeResult = this.mergeTiles(this.field, searchIndex, tileIndex, 'top');
+            if (mergeResult !== false) {
+              const diff = mergeResult === true ? rowIndex - searchIndex + 1 : rowIndex - searchIndex;
+              if(diff !== 0){
+                  this.animations[rowIndex][tileIndex] = 'moveUp-' + diff  ;
+                  moved = true;
               }
             }
-            else{
+            if (mergeResult === null || mergeResult === true){
               break;
             }
           }
         }
       }
     }
-    this.fillRandom();
-    this.render();
+    if (moved){
+      this.fillRandom();
+      this.render();
+    }
   }
 
   moveDown() {
+    let moved = false;
     // row by row from bottom to top
-    for (let rowIndex = this.size - 1; rowIndex >= 0; rowIndex--){
+    for (let rowIndex = size - 1; rowIndex >= 0; rowIndex--){
       // from left to right scan
-      for (let tileIndex = 0; tileIndex < this.size; tileIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
         // move to bottom-most tile
         if (this.field[rowIndex][tileIndex] !== null ){
-          for (let searchIndex = rowIndex; searchIndex < this.size; searchIndex++){
-            if (this.mergeTiles(this.field, searchIndex, tileIndex, 'bottom')) {
-              if (searchIndex === tileIndex) {
-                this.animations[rowIndex][tileIndex] = 'moveDown';
+          for (let searchIndex = rowIndex; searchIndex < size; searchIndex++){
+            let mergeResult = this.mergeTiles(this.field, searchIndex, tileIndex, 'bottom');
+            if (mergeResult !== false) {
+              const diff = mergeResult === true ? searchIndex - rowIndex + 1 : searchIndex - rowIndex;
+              if(diff !== 0){
+                  this.animations[rowIndex][tileIndex] = 'moveDown-' + diff  ;
+                  moved = true;
               }
             }
-            else{
+            if (mergeResult === null || mergeResult === true){
               break;
             }
           }
         }
       }
     }
-    this.fillRandom();
-    this.render();
+    if (moved){
+      this.fillRandom();
+      this.render();
+    }
   }
+
 
   moveRight() {
     // check row by row
-    for (let rowIndex = 0; rowIndex < this.size; rowIndex++){
+    let moved = false;
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
       // check from right to left
-      for (let tileIndex = this.size - 1; tileIndex >= 0; tileIndex--){
+      for (let tileIndex = size - 1; tileIndex >= 0; tileIndex--){
         // check edge
         if (this.field[rowIndex][tileIndex] !== null ){
-          for (let searchIndex = tileIndex; searchIndex < this.size; searchIndex++){
-            if (this.mergeTiles(this.field, rowIndex, searchIndex, 'right')) {
-              if (searchIndex === tileIndex) {
-                this.animations[rowIndex][tileIndex] = 'moveRight';
+          let searchIndex;
+          for (searchIndex = tileIndex; searchIndex < size; searchIndex++) {
+            let mergeResult = this.mergeTiles(this.field, rowIndex, searchIndex, 'right');
+            if (mergeResult !== false) {
+              const diff = mergeResult === true ? searchIndex - tileIndex + 1 : searchIndex - tileIndex;
+              if(diff !== 0){
+                  this.animations[rowIndex][tileIndex] = 'moveRight-' + diff  ;
+                  moved = true;
               }
             }
-            else{
+            if (mergeResult === null || mergeResult === true){
               break;
             }
           }
         }
       }
     }
-    this.fillRandom();
-    this.render();
+    if (moved){
+      this.fillRandom();
+      this.render();
+    }
   }
 
   moveLeft() {
-    for (let rowIndex = 0; rowIndex < this.size; rowIndex++){
-      for (let tileIndex = 0; tileIndex < this.size; tileIndex++){
+    let moved = false;
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
         // move to left-most available tile
         if (this.field[rowIndex][tileIndex] !== null ){
-          for (let searchIndex = tileIndex; searchIndex > 0; searchIndex--){
-            if (this.mergeTiles(this.field, rowIndex, searchIndex, 'left')) {
-              if (searchIndex === tileIndex) {
-                this.animations[rowIndex][tileIndex] = 'moveLeft';
+          for (let searchIndex = tileIndex; searchIndex >= 0; searchIndex--){
+            let mergeResult = this.mergeTiles(this.field, rowIndex, searchIndex, 'left');
+            if (mergeResult !== false) {
+              const diff = mergeResult === true ? tileIndex - searchIndex + 1 : tileIndex - searchIndex;
+              if(diff !== 0){
+                  this.animations[rowIndex][tileIndex] = 'moveLeft-' + diff  ;
+                  moved = true;
               }
             }
-            else{
+            if (mergeResult === null || mergeResult === true){
               break;
             }
           }
         }
       }
     }
-    this.fillRandom();
-    this.render();
+    if (moved){
+      this.fillRandom();
+      this.render();
+    }
   }
 
   private mergeTiles(field: BoardState, rowIndex: number, tileIndex: number, direction: Direction) {
@@ -232,24 +342,24 @@ export class BoardComponent implements OnInit {
       if (field[destRowIndex][destTileIndex] === null) {
         field[destRowIndex][destTileIndex] = tileValue;
         field[rowIndex][tileIndex] = null;
-        return true;
+        return false;
       } else if (field[destRowIndex][destTileIndex] === tileValue){
         // check value, can merge, merge.
         field[destRowIndex][destTileIndex] *= 2;
         field[rowIndex][tileIndex] = null;
-        return false;
+        return true;
       } else{
         // cannot merge, break (eg. 2-->4 )
-        return false;
+        return null;
       }
     }
     else {
-      return false;
+      return null;
     }
   }
 
   resetAnimations() {
-    this.animations = new Array(this.size).fill(null).map(_ => new Array(this.size).fill('base'));
+    this.animations = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
   }
 
   render(animate = true) {
