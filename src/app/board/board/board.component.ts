@@ -57,6 +57,14 @@ const size = 4;
           style({transform: 'translateX(-300%) scale(1)', zIndex: 1,  offset: 1}),
         ]))
       ]),
+      transition('base => moveLeft-4', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(-400%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(-400%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(-400%) scale(1)', zIndex: 1,  offset: 1}),
+        ]))
+      ]),
 
 
       transition('base => moveRight-1', [
@@ -81,6 +89,14 @@ const size = 4;
           style({transform: 'translateX(300%)', zIndex: 1,  offset: 0.5}),
           style({transform: 'translateX(300%) scale(1.1)', zIndex: 1,  offset: 0.75}),
           style({transform: 'translateX(300%) scale(1)', zIndex: 1,  offset: 1}),
+        ]))
+      ]),
+      transition('base => moveRight-4', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateX(0)', zIndex: 1,  offset: 0}),
+          style({transform: 'translateX(400%)', zIndex: 1,  offset: 0.5}),
+          style({transform: 'translateX(400%) scale(1.1)', zIndex: 1,  offset: 0.75}),
+          style({transform: 'translateX(400%) scale(1)', zIndex: 1,  offset: 1}),
         ]))
       ]),
 
@@ -109,6 +125,14 @@ const size = 4;
           style({transform: 'translateY(-300%) scale(1)', zIndex: 1, offset: 1}),
         ]))
       ]),
+      transition('base => moveUp-4', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(-400%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(-400%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(-400%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
 
 
       transition('base => moveDown-1', [
@@ -130,12 +154,19 @@ const size = 4;
       transition('base => moveDown-3', [
         animate(AnimationDuration, keyframes([
           style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
-          style({transform: 'translateY(200%)', zIndex: 1, offset: 0.5}),
-          style({transform: 'translateY(200%) scale(1.1)', zIndex: 1, offset: 0.75}),
-          style({transform: 'translateY(200%) scale(1)', zIndex: 1, offset: 1}),
+          style({transform: 'translateY(300%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(300%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(300%) scale(1)', zIndex: 1, offset: 1}),
         ]))
       ]),
-
+      transition('base => moveDown-4', [
+        animate(AnimationDuration, keyframes([
+          style({transform: 'translateY(0)', zIndex: 1, offset: 0}),
+          style({transform: 'translateY(400%)', zIndex: 1, offset: 0.5}),
+          style({transform: 'translateY(400%) scale(1.1)', zIndex: 1, offset: 0.75}),
+          style({transform: 'translateY(400%) scale(1)', zIndex: 1, offset: 1}),
+        ]))
+      ]),
 
     ])
   ]
@@ -161,6 +192,7 @@ export class BoardComponent implements OnInit {
   private baseValue = 2;
 
   private grid = new Array(size).fill(new Array(size).fill(null));
+  private checkIfMergedStatus: boolean[][];
 
   //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
   private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
@@ -193,7 +225,7 @@ export class BoardComponent implements OnInit {
   fillRandom() {
 
     let empties = [];
-    let maxTracker = this.baseValue;
+    let max = this.baseValue;
     this.field.forEach((row, rowIndex) => {
       row.forEach((tile, tileIndex) => {
         if (tile === null){
@@ -209,14 +241,30 @@ export class BoardComponent implements OnInit {
       //alert('Game Over');
     }
 
+    let value = this.baseValue;
+    let stack = [];
+    stack.push(2);
+    if (max >= 16) {
+      stack.push(4);
+    }
+    if (max >= 64) {
+      stack.push(8);
+    }
+    if (max >= 256) {
+      stack.push(16);
+    }
+
+    value = stack[Math.floor(Math.random() * stack.length)];
+
     let coords = empties[Math.floor(Math.random() * empties.length)];
-    this.field[coords[0]][coords[1]] = this.baseValue;
+    this.field[coords[0]][coords[1]] = value;
 
     //this.state$.next(field);
   }
 
 
   moveUp() {
+    this.resetMergeStatus();
     let moved = false;
     // row by row from top to bottom
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
@@ -247,6 +295,7 @@ export class BoardComponent implements OnInit {
   }
 
   moveDown() {
+    this.resetMergeStatus();
     let moved = false;
     // row by row from bottom to top
     for (let rowIndex = size - 1; rowIndex >= 0; rowIndex--){
@@ -278,6 +327,7 @@ export class BoardComponent implements OnInit {
 
 
   moveRight() {
+    this.resetMergeStatus();
     // check row by row
     let moved = false;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
@@ -309,6 +359,7 @@ export class BoardComponent implements OnInit {
   }
 
   moveLeft() {
+    this.resetMergeStatus();
     let moved = false;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
       for (let tileIndex = 0; tileIndex < size; tileIndex++){
@@ -342,23 +393,32 @@ export class BoardComponent implements OnInit {
     const destRowIndex = direction === 'top' ? rowIndex - 1 : direction === 'bottom' ? rowIndex + 1 : rowIndex;
     const destTileIndex = direction === 'left' ? tileIndex - 1 : direction === 'right' ? tileIndex + 1 : tileIndex;
     if (destRowIndex >= 0 && destRowIndex < size && destTileIndex >= 0 && destTileIndex < size) {
-      if (field[destRowIndex][destTileIndex] === null) {
-        field[destRowIndex][destTileIndex] = tileValue;
-        field[rowIndex][tileIndex] = null;
-        return false;
-      } else if (field[destRowIndex][destTileIndex] === tileValue){
-        // check value, can merge, merge.
-        field[destRowIndex][destTileIndex] *= 2;
-        field[rowIndex][tileIndex] = null;
-        return true;
-      } else{
-        // cannot merge, break (eg. 2-->4 )
+      if (this.checkIfMergedStatus[destRowIndex][destTileIndex]) {
         return null;
+      } else {
+          if (field[destRowIndex][destTileIndex] === null) {
+            field[destRowIndex][destTileIndex] = tileValue;
+            field[rowIndex][tileIndex] = null;
+            return false;
+          } else if (field[destRowIndex][destTileIndex] === tileValue){
+            // check value, can merge, merge.
+            field[destRowIndex][destTileIndex] *= 2;
+            field[rowIndex][tileIndex] = null;
+            this.checkIfMergedStatus[destRowIndex][destTileIndex] = true;
+            return true;
+          } else{
+            // cannot merge, break (eg. 2-->4 )
+            return null;
+          }
+        }
       }
-    }
     else {
       return null;
     }
+  }
+
+  private resetMergeStatus() {
+    this.checkIfMergedStatus = new Array(size).fill(false).map(_ => new Array(size).fill(false));
   }
 
   resetAnimations() {
