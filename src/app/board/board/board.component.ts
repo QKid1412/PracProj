@@ -193,10 +193,13 @@ export class BoardComponent implements OnInit {
   fillRandom() {
 
     let empties = [];
+    let maxTracker = this.baseValue;
     this.field.forEach((row, rowIndex) => {
       row.forEach((tile, tileIndex) => {
         if (tile === null){
           empties.push([rowIndex, tileIndex])
+        } else if (tile > max) {
+          max = tile;
         }
       });
     });
@@ -367,7 +370,7 @@ export class BoardComponent implements OnInit {
       this.animationsView = this.clone(this.animations);
       setTimeout(() => {
         this.resetAnimations();
-        this.animationsView
+        this.animationsView = this.clone(this.animations);
         this.fieldView = this.clone(this.field);
       }, AnimationDuration);
     }
