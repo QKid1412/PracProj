@@ -200,7 +200,7 @@ export class BoardComponent implements OnInit {
 
   private baseValue = 2;
 
-  private grid = new Array(size).fill(new Array(size).fill(null));
+  grid = new Array(size).fill(new Array(size).fill(null));
   private checkIfMergedStatus: boolean[][];
 
   //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
@@ -213,8 +213,8 @@ export class BoardComponent implements OnInit {
   tileWidth = 100;
   tileHeight = 100;
 
-  private currentScore;
-  private highestScore;
+  currentScore;
+  highestScore;
 
   constructor( private cookieService: CookieService ) { }
 
