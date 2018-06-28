@@ -205,7 +205,7 @@ export class BoardComponent implements OnInit {
 
   //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
   private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
-  private fieldView: BoardState;
+  fieldView: BoardState;
 
   private animations: AnimationState; // = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
   private animationsView: AnimationState;
