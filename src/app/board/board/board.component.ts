@@ -182,8 +182,6 @@ const size = 4;
 })
 export class BoardComponent implements OnInit {
 
-  cookieValue = 'UNKNOWN';
-
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
   };
@@ -215,18 +213,23 @@ export class BoardComponent implements OnInit {
   tileWidth = 100;
   tileHeight = 100;
 
+  private currentScore;
+  private highestScore;
+
   constructor( private cookieService: CookieService ) { }
 
   ngOnInit() {
 
-    this.cookieService.set( 'Test', 'Hello World' );
-    this.cookieValue = this.cookieService.get('Test');
+    //this.cookieService.set( 'HighestScore', 'baseValue'); // aq*
+    //this.cookieValue = this.cookieService.get('CurrentScore');
 
     console.log('Init state', this.field);
     this.resetAnimations();
     this.fillRandom();
     this.fillRandom();
     this.render(false);
+    this.resetCurrentScore();
+    this.retrieveHighestScore();
   }
 
   ngAfterViewChecker() {
@@ -262,10 +265,10 @@ export class BoardComponent implements OnInit {
     if (max >= 16) {
       stack.push(4);
     }
-    if (max >= 64) {
+    if (max >= 128) {
       stack.push(8);
     }
-    if (max >= 256) {
+    if (max >= 512) {
       stack.push(16);
     }
 
@@ -426,6 +429,7 @@ export class BoardComponent implements OnInit {
     this.fillRandom();
     this.fillRandom();
     this.render(false);
+    this.resetCurrentScore();
   }
 
   bombAttack() {
@@ -470,6 +474,14 @@ export class BoardComponent implements OnInit {
           } else if (field[destRowIndex][destTileIndex] === tileValue){
             // check value, can merge, merge.
             field[destRowIndex][destTileIndex] *= 2;
+
+            this.currentScore += field[destRowIndex][destTileIndex];
+            if (this.currentScore >= this.highestScore){
+                  this.highestScore = this.currentScore;
+            }
+
+            this.cookieService.set( 'HighestScore', JSON.stringify(this.highestScore));
+
             field[rowIndex][tileIndex] = null;
             this.checkIfMergedStatus[destRowIndex][destTileIndex] = true;
             return true;
@@ -490,6 +502,19 @@ export class BoardComponent implements OnInit {
 
   resetAnimations() {
     this.animations = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
+  }
+
+  resetCurrentScore() {
+    this.currentScore = 0;
+  }
+
+  retrieveHighestScore() {
+    if (this.highestScore === null){
+      this.highestScore = 0;
+    }
+    else {
+      this.highestScore = this.cookieService.get('HighestScore');
+    }
   }
 
   render(animate = true) {

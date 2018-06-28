@@ -6,14 +6,21 @@
   align-items:center;
 }
 
+.scores-container {
+  border: 10px solid red;
+  z-Index: 10;
+  right: 0;
+  position: absolute;
+}
+
 h1{
   font-size: 3rem;
   text-align: left;
 }
 
 .board {
-  border: 4px dotted  #e4c39b;
-  background: #e4c39b;
+  //border: 4px dotted  #e4c39b;
+  //background: #e4c39b;
   position: relative;
 }
 
