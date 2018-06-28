@@ -7,10 +7,64 @@
 }
 
 .scores-container {
-  border: 10px solid red;
-  z-Index: 10;
-  right: 0;
+  font-family: 'Open Sans', sans-serif;
+
+  top: 110px;
   position: absolute;
+  display: inline-flex;
+}
+
+.score-container, .best-container {
+  $inner-height: 20px;
+  border-radius: 360px;
+  width: 80px;
+  margin-left: 8px;
+  margin-right: 13px;
+  position: relative;
+  display: inline-block;
+  background: #e4c39b;
+  padding: 15px 15px;
+  font-size: $inner-height;
+  height: $inner-height;
+  line-height: $inner-height + 22px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #f4e7d7;
+  }
+
+  .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: $inner-height;
+    line-height: $inner-height;
+    font-weight: bold;
+    color: rgba(#60412b, .9);
+    z-index: 100;
+    @include animation(move-up 600ms ease-in);
+    @include animation-fill-mode(both);
+  }
+}
+
+.score-container:after {
+  content: "Score";
+}
+
+.best-container:after {
+  content: "Best"
 }
 
 h1{
@@ -87,9 +141,9 @@ h1{
   cursor: pointer;
   outline: none;
   font-size: 20px;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Eater', cursive;
   display: in-line flex;
-  background: #8f7a66;
+  background: #8c5e26;
   border-radius: 10px;
   padding: 0 20px;
   text-decoration: none;
@@ -101,13 +155,13 @@ h1{
   text-align: center;
   float: left;
   border: none;
-  box-shadow: 0 9px #999;;
+  box-shadow: 0 9px #deb787;
 
   &:hover{
-   background: #776555;
+   background: #b47931;
   }
   &:active{
-   background-color: #776555;
+   background-color: #b47931;
    box-shadow: 0 5px #666;
    transform: translateY(4px);
   }
@@ -118,9 +172,9 @@ h1{
   cursor: pointer;
   outline: none;
   font-size: 20px;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Eater', cursive;
   display: in-line flex;
-  background: #8f7a66;
+  background: #8c5e26;
   border-radius: 10px;
   padding: 0 20px;
   text-decoration: none;
@@ -132,13 +186,13 @@ h1{
   text-align: center;
   float: right;
   border: none;
-  box-shadow: 0 9px #999;;
+  box-shadow: 0 9px #deb787;
 
   &:hover{
-   background: #776555;
+   background: #b47931;
   }
   &:active{
-   background-color: #776555;
+   background-color: #b47931;
    box-shadow: 0 5px #666;
    transform: translateY(4px);
   }

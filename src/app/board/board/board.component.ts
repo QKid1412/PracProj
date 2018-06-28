@@ -406,7 +406,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  isGameOver(){
+  /*isGameOver(){
     boolean result = true;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
       for (let tileIndex = 0; tileIndex < size; tileIndex++){
@@ -416,7 +416,7 @@ export class BoardComponent implements OnInit {
       }
     }
     return result;
-  }
+  }*/
 
 
   newGame() {
@@ -513,7 +513,7 @@ export class BoardComponent implements OnInit {
       this.highestScore = 0;
     }
     else {
-      this.highestScore = this.cookieService.get('HighestScore');
+      this.highestScore = JSON.parse(this.cookieService.get('HighestScore'));
     }
   }
 
