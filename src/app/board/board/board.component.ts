@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, AfterViewChecked, Input } from '@angular/core';
 import { animate, AnimationMetadata, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { BehaviorSubject } from 'rxjs';
+
+import { CookieService } from 'ngx-cookie-service';
 
 //import { compile } from '../animations'
 
@@ -22,9 +23,17 @@ const size = 4;
       state('base', style({
         transform: 'translateX(0) scale(1)',
       })),
-      state('updated', style({ })),
-      state('moveLeft',   style({ })),
-      state('moveRight',   style({ })),
+
+    /*  transition('base => appeared', [
+        style({width: 10, transform: 'translateX(0)', opacity: 0}),
+          animate('0.3s 0.1s ease', style({
+            transform: 'translateX(0)', width: 100
+          })),
+          animate('0.3s ease', style({
+            opacity: 1
+          }))
+      ]),*/
+
       transition('base => updated', [
         animate(AnimationDuration, keyframes([
           style({transform: 'scale(1)', zIndex: 1,  offset: 0}),
@@ -173,6 +182,8 @@ const size = 4;
 })
 export class BoardComponent implements OnInit {
 
+  cookieValue = 'UNKNOWN';
+
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
   };
@@ -204,9 +215,13 @@ export class BoardComponent implements OnInit {
   tileWidth = 100;
   tileHeight = 100;
 
-  constructor() { }
+  constructor( private cookieService: CookieService ) { }
 
   ngOnInit() {
+
+    this.cookieService.set( 'Test', 'Hello World' );
+    this.cookieValue = this.cookieService.get('Test');
+
     console.log('Init state', this.field);
     this.resetAnimations();
     this.fillRandom();
@@ -258,6 +273,7 @@ export class BoardComponent implements OnInit {
 
     let coords = empties[Math.floor(Math.random() * empties.length)];
     this.field[coords[0]][coords[1]] = value;
+    //this.animations[coords[0]][coords[1]] = 'appeared' ;
 
     //this.state$.next(field);
   }
@@ -386,6 +402,19 @@ export class BoardComponent implements OnInit {
       this.render();
     }
   }
+
+  isGameOver(){
+    boolean result = true;
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (this.field[rowIndex][tileIndex] === this.field[rowIndex-1][tileIndex] || this.field[rowIndex][tileIndex] === this.field[rowIndex+1][tileIndex] || this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex-1] || this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex+1] ) {
+          result = false;
+        }
+      }
+    }
+    return result;
+  }
+
 
   newGame() {
     for (let rowIndex = 0; rowIndex < size; rowIndex++){

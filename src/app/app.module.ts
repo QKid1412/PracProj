@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { BoardModule } from './board/board.module';
 import { BoardComponent } from './board/board/board.component';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   imports: [
   BrowserModule,
@@ -26,7 +28,7 @@ import { BoardComponent } from './board/board/board.component';
   declarations: [
     AppComponent,
   ],
-  providers: [],
+  providers: [ CookieService ],
   bootstrap: [
     AppComponent,
     BoardComponent
