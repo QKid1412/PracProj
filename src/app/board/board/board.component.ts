@@ -180,7 +180,7 @@ const size = 4;
     ])
   ]
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, AfterViewChecked {
 
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
