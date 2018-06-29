@@ -15,7 +15,7 @@ export const AnimationDuration = 200;
 const size = 4;
 
 @Component({
-  selector: 'fm-board',
+  selector: 'board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
   animations: [
@@ -220,9 +220,6 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
 
-    //this.cookieService.set( 'HighestScore', 'baseValue'); // aq*
-    //this.cookieValue = this.cookieService.get('CurrentScore');
-
     console.log('Init state', this.field);
     this.resetAnimations();
     this.fillRandom();
@@ -230,6 +227,7 @@ export class BoardComponent implements OnInit {
     this.render(false);
     this.resetCurrentScore();
     this.retrieveHighestScore();
+    console.log('Highest Score', this.highestScore);
   }
 
   ngAfterViewChecker() {
