@@ -226,8 +226,10 @@ export class BoardComponent implements OnInit {
     this.fillRandom();
     this.render(false);
     this.resetCurrentScore();
+    console.log ('Before check', this.cookieService.check('HighestScore'));
     this.retrieveHighestScore();
-    //console.log('Highest Score', this.highestScore);
+    console.log ('after check', this.cookieService.check('HighestScore'));
+    console.log('Highest Score', this.highestScore);
   }
 
   ngAfterViewChecker() {
@@ -507,13 +509,10 @@ export class BoardComponent implements OnInit {
   }
 
   retrieveHighestScore() {
-    /*if (! this.cookieService.check('HighestScore')){
+    if (! this.cookieService.check('HighestScore')){
       this.highestScore = 0;
-      this.cookieService.set( 'HighestScore', JSON.stringify(this.highestScore));
-      console.log('Highest Score', this.highestScore);
-    }*/
-    this.highestScore = 0;
-    this.cookieService.set( 'HighestScore', JSON.stringify(this.highestScore));
+      this.cookieService.set('HighestScore', JSON.stringfy(this.highestScore));
+    }
     this.highestScore = Number(this.cookieService.get('HighestScore'));
 
   }
