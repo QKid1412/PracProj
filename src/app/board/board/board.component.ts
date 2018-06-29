@@ -513,7 +513,7 @@ export class BoardComponent implements OnInit {
       this.highestScore = 0;
     }
     else {
-      this.highestScore = JSON.parse(this.cookieService.get('HighestScore'));
+      this.highestScore = Number(this.cookieService.get('HighestScore'));
     }
   }
 
