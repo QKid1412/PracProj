@@ -507,11 +507,13 @@ export class BoardComponent implements OnInit {
   }
 
   retrieveHighestScore() {
-    if (! this.cookieService.check('HighestScore')){
+    /*if (! this.cookieService.check('HighestScore')){
       this.highestScore = 0;
       this.cookieService.set( 'HighestScore', JSON.stringify(this.highestScore));
       console.log('Highest Score', this.highestScore);
-    }
+    }*/
+    this.highestScore = 0;
+    this.cookieService.set( 'HighestScore', JSON.stringify(this.highestScore));
     this.highestScore = Number(this.cookieService.get('HighestScore'));
 
   }
