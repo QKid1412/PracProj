@@ -220,7 +220,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('Init state', this.field);
+    //console.log('Init state', this.field);
     this.resetAnimations();
     this.fillRandom();
     this.fillRandom();
@@ -231,7 +231,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngAfterViewChecker() {
-    console.log('ViewChecked');
+    //console.log('ViewChecked');
   }
 
   fill(x: number, y: number) {
@@ -252,7 +252,7 @@ export class BoardComponent implements OnInit {
       });
     });
 
-    console.log('elems', empties);
+    //console.log('elems', empties);
     if (empties.length ===0 ) {
       //alert('Game Over');
     }
@@ -508,7 +508,8 @@ export class BoardComponent implements OnInit {
 
   retrieveHighestScore() {
     if (! this.cookieService.check('HighestScore')){
-      this.cookieService.set('HighestScore', '0')
+      this.cookieService.set('HighestScore', '0');
+      console.log('Highest Score', this.highestScore);
     }
     this.highestScore = Number(this.cookieService.get('HighestScore'));
 
