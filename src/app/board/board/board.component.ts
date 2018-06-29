@@ -13,6 +13,7 @@ export type Animation = string; //'base' | 'moveLeft' | 'moveRight' | 'moveUp' |
 export const AnimationDuration = 200;
 
 const size = 4;
+const baseValue = 2;
 
 @Component({
   selector: 'fm-board',
@@ -180,7 +181,7 @@ const size = 4;
     ])
   ]
 })
-export class BoardComponent implements OnInit, AfterViewChecked {
+export class BoardComponent implements OnInit {
 
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
@@ -198,14 +199,12 @@ export class BoardComponent implements OnInit, AfterViewChecked {
     this.moveLeft();
   };
 
-  private baseValue = 2;
-
-  grid = new Array(size).fill(new Array(size).fill(null));
+  private grid = new Array(size).fill(new Array(size).fill(null));
   private checkIfMergedStatus: boolean[][];
 
   //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
   private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
-  fieldView: BoardState;
+  private fieldView: BoardState;
 
   private animations: AnimationState; // = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
   private animationsView: AnimationState;
@@ -237,13 +236,13 @@ export class BoardComponent implements OnInit, AfterViewChecked {
   }
 
   fill(x: number, y: number) {
-    this.field[x][y] = this.baseValue;
+    this.field[x][y] = baseValue;
   }
 
   fillRandom() {
 
     let empties = [];
-    let max = this.baseValue;
+    let max = baseValue;
     this.field.forEach((row, rowIndex) => {
       row.forEach((tile, tileIndex) => {
         if (tile === null){
@@ -259,7 +258,7 @@ export class BoardComponent implements OnInit, AfterViewChecked {
       //alert('Game Over');
     }
 
-    let value = this.baseValue;
+    let value = baseValue;
     let stack = [];
     stack.push(2);
     if (max >= 16) {
