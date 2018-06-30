@@ -1,6 +1,13 @@
 @media only screen and (max-width : 480px) {
     .roof-top{
-      display: none;
+      top:0;
+      margin: auto;
+      position: static;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 220px 160px 220px;
+      border-color: transparent transparent #64431b transparent;
     }
 }
 
