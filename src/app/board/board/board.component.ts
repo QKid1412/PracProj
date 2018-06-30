@@ -198,6 +198,45 @@ export class BoardComponent implements OnInit {
     this.moveLeft();
   };
 
+  touch1 = {x:0,y:0,time:0};
+
+  @HostListener('touchstart', ['$event'])
+  @HostListener('touchend', ['$event'])
+  @HostListener('touchcancel', ['$event'])
+  handleTouch(event){
+    var touch = event.touches[0] || event.changedTouches[0];
+    if (event.type === 'touchstart'){
+      this.touch1.x = touch.pageX;
+      this.touch1.y = touch.pageY;
+      this.touch1.time = event.timeStamp;
+    } else if (event.type === 'touchend'){
+      var dx = touch.pageX - this.touch1.x;
+      var dy = touch.pageY - this.touch1.y;
+      var dt = event.timeStamp - this.touch1.time;
+
+      if (dt < 500){
+        // swipe lasted less than 500 ms
+        if (Math.abs(dx) > 60){
+          // delta x is at least 60 pixels
+          if (dx < 0){
+            this.moveLeft(event);
+          } else {
+            this.moveRight(event);
+          }
+        }
+
+        if (Math.abs(dy) > 60){
+          // delta y is at least 60 pixels
+          if (dy < 0){
+            this.moveUp(event);
+          } else {
+            this.moveDown(event);
+          }
+        }
+      }
+    }
+  }
+
   private baseValue = 2;
 
   grid = new Array(size).fill(new Array(size).fill(null));
