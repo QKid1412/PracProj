@@ -1,17 +1,19 @@
-@media only screen and (min-width : 480px) {
+@media only screen and (max-width : 480px) {
     .roof-top{
-      top: 0;
-      width: 50%;
-      height: 130px;
-      padding-bottom: 10px;
-      border: none;
-      background: none;
       display: none;
     }
+    .overflow{
+      top: 0;
+      width: 50%;
+      height: 160px;
+      padding-bottom: 20px;
+      border: none;
+      background: none;
+    }
+
 }
 
 .roof-top{
-  display: flex;
   top:0;
   margin: auto;
   position: static;
@@ -22,9 +24,11 @@
   border-color: transparent transparent #64431b transparent;
 }
 
-h1 {
+.title h1 {
   color: #efdbc3;
-  margin: auto;
+  padding: 0;
+  margin-top: 0;
+  margin-left: auto;
   width: 100%;
   top: 30px;
   left: 0;
