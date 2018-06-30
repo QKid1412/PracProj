@@ -219,18 +219,18 @@ export class BoardComponent implements OnInit {
         if (Math.abs(dx) > 60){
           // delta x is at least 60 pixels
           if (dx < 0){
-            this.moveLeft(event);
+            this.moveLeft();
           } else {
-            this.moveRight(event);
+            this.moveRight();
           }
         }
 
         if (Math.abs(dy) > 60){
           // delta y is at least 60 pixels
           if (dy < 0){
-            this.moveUp(event);
+            this.moveUp();
           } else {
-            this.moveDown(event);
+            this.moveDown();
           }
         }
       }
