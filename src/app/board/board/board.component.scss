@@ -10,10 +10,15 @@
   font-family: 'Open Sans', sans-serif;
 
   top: 110px;
-  position: absolute;
+  position: fixed;
   display: inline-flex;
 }
+@media only screen and (max-width : 480px) {
+    .scores-container{
+      top: 80px;
+    }
 
+}
 .score-container, .best-container {
   $inner-height: 20px;
 

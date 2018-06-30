@@ -1,17 +1,3 @@
-@media only screen and (max-width : 480px) {
-    .roof-top{
-      display: none;
-    }
-    .overflow{
-      top: 0;
-      width: 50%;
-      height: 160px;
-      padding-bottom: 20px;
-      border: none;
-      background: none;
-    }
-
-}
 
 .roof-top{
   top:0;
@@ -24,16 +10,49 @@
   border-color: transparent transparent #64431b transparent;
 }
 
+@media only screen and (max-width : 480px) {
+    .roof-top{
+      display: none;
+    }
+}
+
+.title-overflow{
+  display: none;
+}
 .title h1 {
   color: #efdbc3;
   padding: 0;
   margin-top: 0;
   margin-left: auto;
   width: 100%;
-  top: 30px;
+  top: 20px;
   left: 0;
   font-size: 3rem;
   text-align: center;
-  position: absolute;
-  display: inline;
+  position: fixed;
+  z-index: 99;
+  //display: inline;
+}
+@media only screen and (max-width : 480px) {
+
+    .overflow{
+      top: 0;
+      width: 50%;
+      height: 160px;
+      padding-bottom: 20px;
+      border: none;
+      background: none;
+    }
+
+    .title{
+      //display: none;
+      top: 0;
+      margin-bottom: -30px;
+    }
+    .title h1{
+      //display: none;
+      top: 0;
+      margin-bottom: -30px;
+    }
+
 }
