@@ -15,7 +15,7 @@
 }
 @media only screen and (max-width : 480px) {
     .scores-container{
-      top: 80px;
+      top: 60px;
     }
 
 }
@@ -87,14 +87,12 @@ h1{
 .grid-row {
   display: flex;
   flex-direction: row;
-  touch-action: none;
 }
 
 .grid-tile {
   box-sizing: border-box;
   display: flex;
   padding: 4px;
-  touch-action: none;
   .fill {
     background: #f4e7d7;
     border-radius: 4px;
@@ -103,7 +101,6 @@ h1{
 }
 
 .tile {
-  touch-action: none;
   box-sizing: border-box;
   color: #60412b;
   //border-radius: 4px;
@@ -144,6 +141,12 @@ h1{
   margin-top: 22px;
   width: 400px;
 }
+@media only screen and (max-width : 480px) {
+    .actions{
+        margin-top: 10px;
+    }
+
+}
 
 .restart-button {
   border: none;
@@ -175,6 +178,7 @@ h1{
    transform: translateY(4px);
   }
 }
+
 
 .eliminate-button {
   border: none;

@@ -6,13 +6,20 @@ html {
   color: #BBAB98;
   height: 100%;
   background-attachment: fixed;
-  /*-webkit-background-size: cover;
+  -webkit-background-size: cover;
    -moz-background-size: cover;
    -o-background-size: cover;
-   background-size: cover;*/
+   background-size: cover;
 
   font-family: 'Pacifico', cursive;
   font-size: 18px;
+}
+@media only screen and (max-width : 480px) {
+    html{
+      background-image: none;
+      background-color: #1c371f;
+    }
+
 }
 
 .lock-screen {
