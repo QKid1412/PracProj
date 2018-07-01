@@ -12,6 +12,14 @@ html {
   font-family: 'Pacifico', cursive;
   font-size: 18px;
 }
+
+.lock-screen {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+}
+
 .loader {
 	position: fixed;
 	left: 0px;
