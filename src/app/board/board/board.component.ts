@@ -3,6 +3,9 @@ import { animate, AnimationMetadata, keyframes, state, style, transition, trigge
 
 import { CookieService } from 'ngx-cookie-service';
 
+declare var jquery:any;
+declare var $ :any;
+
 //import { compile } from '../animations'
 
 export type BoardState = number[][];
@@ -181,7 +184,6 @@ const size = 4;
   ]
 })
 export class BoardComponent implements OnInit {
-
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
   };
@@ -198,11 +200,38 @@ export class BoardComponent implements OnInit {
     this.moveLeft();
   };
 
+  @HostListener('document: keydown.B', ['$event.target']) keyB() {
+    this.bombAttack();
+  };
+
+  @HostListener('document: keydown.R', ['$event.target']) keyR() {
+    this.newGame();
+  };
+
+  private baseValue = 2;
+
+  grid = new Array(size).fill(new Array(size).fill(null));
+  private checkIfMergedStatus: boolean[][];
+
+  //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
+  private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
+  fieldView: BoardState;
+
+  private animations: AnimationState; // = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
+  private animationsView: AnimationState;
+
+  tileWidth = 100;
+  tileHeight = 100;
+
+  currentScore;
+  highestScore;
+
   touch1 = {x:0,y:0,time:0};
 
-  @HostListener('touchstart', ['$event'])
-  @HostListener('touchend', ['$event'])
-  @HostListener('touchcancel', ['$event'])
+  @HostListener('window: touchstart', ['$event'])
+  @HostListener('window: touchend', ['$event'])
+  @HostListener('window: touchcancel', ['$event'])
+
   handleTouch(event){
     var touch = event.touches[0] || event.changedTouches[0];
     if (event.type === 'touchstart'){
@@ -235,31 +264,14 @@ export class BoardComponent implements OnInit {
         }
       }
     }
+
   }
-
-  private baseValue = 2;
-
-  grid = new Array(size).fill(new Array(size).fill(null));
-  private checkIfMergedStatus: boolean[][];
-
-  //private state$ = new BehaviorSubject<BoardState>(new Array(size).fill(null).map(_ => new Array(size).fill(null)));
-  private field: BoardState = new Array(size).fill(null).map(_ => new Array(size).fill(null));
-  fieldView: BoardState;
-
-  private animations: AnimationState; // = new Array(size).fill(null).map(_ => new Array(size).fill('base'));
-  private animationsView: AnimationState;
-
-  tileWidth = 100;
-  tileHeight = 100;
-
-  currentScore;
-  highestScore;
 
   constructor( private cookieService: CookieService ) { }
 
   ngOnInit() {
-
     //console.log('Init state', this.field);
+
     this.resetAnimations();
     this.fillRandom();
     this.fillRandom();
@@ -267,8 +279,8 @@ export class BoardComponent implements OnInit {
     this.resetCurrentScore();
     console.log ('Before check', this.cookieService.check('HighestScore'));
     this.retrieveHighestScore();
-    console.log ('after check', this.cookieService.check('HighestScore'));
-    console.log('Highest Score', this.highestScore);
+    //console.log ('after check', this.cookieService.check('HighestScore'));
+    //console.log('Highest Score', this.highestScore);
   }
 
   ngAfterViewChecker() {

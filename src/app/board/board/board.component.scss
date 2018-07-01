@@ -10,7 +10,7 @@
   font-family: 'Open Sans', sans-serif;
 
   top: 110px;
-  position: fixed;
+  position: absolute;
   display: inline-flex;
 }
 @media only screen and (max-width : 480px) {
@@ -81,6 +81,7 @@ h1{
   //border: 4px dotted  #e4c39b;
   //background: #e4c39b;
   position: relative;
+  touch-action: none;
 }
 
 .grid-row {

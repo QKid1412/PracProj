@@ -11,6 +11,8 @@ import { BoardComponent } from './board/board/board.component';
 
 import { CookieService } from 'ngx-cookie-service';
 
+import 'hammerjs';
+
 @NgModule({
   imports: [
   BrowserModule,
