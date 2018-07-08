@@ -15,7 +15,7 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
 export type Animation = string; //'base' | 'moveLeft' | 'moveRight' | 'moveUp' | 'moveDown';
 export const AnimationDuration = 200;
 
-export var size = 4;
+export var size = 5;
 
 @Component({
   selector: 'board',
@@ -207,7 +207,7 @@ export class BoardComponent implements OnInit {
   @HostListener('document: keydown.R', ['$event.target']) keyR() {
     this.newGame();
   };
-
+  
   private baseValue = 2;
 
   grid = new Array(size).fill(new Array(size).fill(null));

@@ -31,7 +31,7 @@ import 'hammerjs';
     AppComponent,
     TrapScrollDirective
   ],
-  providers: [ CookieService ],
+  providers: [ CookieService],
   bootstrap: [
     AppComponent,
     BoardComponent
