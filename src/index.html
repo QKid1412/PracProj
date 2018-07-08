@@ -5,13 +5,40 @@
   <title>Proj2048</title>
   <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript">
     $(window).load(function() {
     	$(".loader").fadeOut("slow");
-    })
+    });
+
+    var windowWidth = $(window).width();
+    if (windowWidth < 768){
+      $(window).on( "scroll", function () {
+        $(window).scrollTo(0, 0);
+      });
+    }
+
+    /*window.blockMenuHeaderScroll = false;
+    $(window).on('touchstart', function(e)
+    {
+        if ($(e.target).closest('.board').length == 1)
+        {
+            blockMenuHeaderScroll = true;
+        }
+    });
+    $(window).on('touchend', function()
+    {
+        blockMenuHeaderScroll = false;
+    });
+    $(window).on('touchmove', function(e)
+    {
+        if (blockMenuHeaderScroll)
+        {
+            e.preventDefault();
+        }
+    });*/
 
   </script>
 </head>

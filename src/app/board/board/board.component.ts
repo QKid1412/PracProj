@@ -250,9 +250,9 @@ export class BoardComponent implements OnInit {
       var absDx = Math.abs(dx);
       var absDy = Math.abs(dy);
 
-      if (dt < 500){
+      if (Math.max(absDx, absDy) > 10){
         // swipe lasted less than 500 ms
-        if (absDx >= absDy) {
+        if (absDx > absDy) {
           // move left/right
           if (Math.abs(dx) > 60){
             // delta x is at least 60 pixels
@@ -262,7 +262,7 @@ export class BoardComponent implements OnInit {
               this.moveRight();
             }
           }
-        } else if (absDx < absDy ){
+        } else {
           // move up/down
           if (Math.abs(dy) > 60){
             // delta y is at least 60 pixels
