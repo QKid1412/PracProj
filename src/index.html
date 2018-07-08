@@ -13,32 +13,25 @@
     	$(".loader").fadeOut("slow");
     });
 
-    /*var windowWidth = $(window).width();
-    if (windowWidth < 768){
-      $(window).on( "scroll", function () {
-        $(window).scrollTo(0, 0);
-      });
-    }*/
+    function preventPullToRefresh(element) {
+    var prevent = false;
 
-    /*window.blockMenuHeaderScroll = false;
-    $(window).on('touchstart', function(e)
-    {
-        if ($(e.target).closest('.board').length == 1)
-        {
-            blockMenuHeaderScroll = true;
-        }
+    document.querySelector(element).addEventListener('touchstart', function(e){
+      if (e.touches.length !== 1) { return; }
+
+      var scrollY = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+      prevent = (scrollY === 0);
     });
-    $(window).on('touchend', function()
-    {
-        blockMenuHeaderScroll = false;
+
+    document.querySelector(element).addEventListener('touchmove', function(e){
+      if (prevent) {
+        prevent = false;
+        e.preventDefault();
+      }
     });
-    $(window).on('touchmove', function(e)
-    {
-        if (blockMenuHeaderScroll)
-        {
-            e.preventDefault();
-        }
-    });*/
+  }
+
+  preventPullToRefresh('html') // pass #id or html tag into the method
 
   </script>
 </head>

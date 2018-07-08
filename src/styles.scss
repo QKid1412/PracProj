@@ -26,7 +26,7 @@ html {
 }
 
 body{
-    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
 }
 
 @media only screen and (max-width : 480px) {
