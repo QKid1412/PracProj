@@ -272,7 +272,7 @@ export class BoardComponent implements OnInit {
               this.moveDown();
             }
           }
-        }  
+        }
 
 
       }
@@ -284,11 +284,6 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     //console.log('Init state', this.field);
-
-    var hm = new Hammer(document);
-    hm.on('swipeleft', function(ev){
-      console.log('Swipe LEft')
-    })
 
     this.resetAnimations();
     this.fillRandom();
