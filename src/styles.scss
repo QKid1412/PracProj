@@ -18,10 +18,21 @@ html {
     html{
       background-image: none;
       background-color: #1c371f;
+      overflow: hidden;
+      height: 100%;
     }
 
 }
 
+
+@media only screen and (max-width : 480px) {
+    body{
+      position: fixed;
+      overflow: hidden;
+      height: 100%;
+    }
+
+}
 .lock-screen {
     //height: 100%;
     //overflow: hidden;
