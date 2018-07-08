@@ -248,18 +248,18 @@ export class BoardComponent implements OnInit {
         if (Math.abs(dx) > 60){
           // delta x is at least 60 pixels
           if (dx < 0){
-            //this.moveLeft();
+            this.moveLeft();
           } else {
-            //this.moveRight();
+            this.moveRight();
           }
         }
 
         if (Math.abs(dy) > 60){
           // delta y is at least 60 pixels
           if (dy < 0){
-          //  this.moveUp();
+            this.moveUp();
           } else {
-          //  this.moveDown();
+            this.moveDown();
           }
         }
       }
@@ -272,12 +272,10 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
     //console.log('Init state', this.field);
 
-    var hm = new Hammer(document.body);
-    console.log('Swipe LEft', document);
+    var hm = new Hammer(document);
     hm.on('swipeleft', function(ev){
-      console.log('Swipe LEft');
-      this.moveLeft()
-    });
+      console.log('Swipe LEft')
+    })
 
     this.resetAnimations();
     this.fillRandom();

@@ -10,7 +10,6 @@ import { BoardModule } from './board/board.module';
 import { BoardComponent } from './board/board/board.component';
 
 import { CookieService } from 'ngx-cookie-service';
-import { TrapScrollDirective } from "./board/board/trap-scroll.directive";
 import 'hammerjs';
 
 @NgModule({
@@ -29,7 +28,6 @@ import 'hammerjs';
   ],
   declarations: [
     AppComponent,
-    TrapScrollDirective
   ],
   providers: [ CookieService],
   bootstrap: [
