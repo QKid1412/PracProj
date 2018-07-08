@@ -185,18 +185,22 @@ export var size = 4;
 })
 export class BoardComponent implements OnInit {
   @HostListener('document: keydown.ArrowUp', ['$event.target']) arrowUp() {
+    event.preventDefault();
     this.moveUp();
   };
 
   @HostListener('document: keydown.ArrowRight', ['$event.target']) arrowRight() {
+    event.preventDefault();
     this.moveRight();
   };
 
   @HostListener('document: keydown.ArrowDown', ['$event.target']) arrowDown() {
+    event.preventDefault();
     this.moveDown();
   };
 
   @HostListener('document: keydown.ArrowLeft', ['$event.target']) arrowLeft() {
+    event.preventDefault();
     this.moveLeft();
   };
 
@@ -228,9 +232,9 @@ export class BoardComponent implements OnInit {
 
   touch1 = {x:0,y:0,time:0};
 
-  @HostListener('window: touchstart', ['$event'])
-  @HostListener('window: touchend', ['$event'])
-  @HostListener('window: touchcancel', ['$event'])
+  @HostListener('body: touchstart', ['$event'])
+  @HostListener('body: touchend', ['$event'])
+  @HostListener('body: touchcancel', ['$event'])
 
   handleTouch(event){
     var touch = event.touches[0] || event.changedTouches[0];
@@ -243,25 +247,34 @@ export class BoardComponent implements OnInit {
       var dy = touch.pageY - this.touch1.y;
       var dt = event.timeStamp - this.touch1.time;
 
+      var absDx = Math.abs(dx);
+      var absDy = Math.abs(dy);
+
       if (dt < 500){
         // swipe lasted less than 500 ms
-        if (Math.abs(dx) > 60){
-          // delta x is at least 60 pixels
-          if (dx < 0){
-            this.moveLeft();
-          } else {
-            this.moveRight();
+        if (absDx >= absDy) {
+          // move left/right
+          if (Math.abs(dx) > 60){
+            // delta x is at least 60 pixels
+            if (dx < 0){
+              this.moveLeft();
+            } else {
+              this.moveRight();
+            }
           }
-        }
+        } else if (absDx < absDy ){
+          // move up/down
+          if (Math.abs(dy) > 60){
+            // delta y is at least 60 pixels
+            if (dy < 0){
+              this.moveUp();
+            } else {
+              this.moveDown();
+            }
+          }
+        }  
 
-        if (Math.abs(dy) > 60){
-          // delta y is at least 60 pixels
-          if (dy < 0){
-            this.moveUp();
-          } else {
-            this.moveDown();
-          }
-        }
+
       }
     }
 
