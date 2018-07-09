@@ -483,6 +483,41 @@ export class BoardComponent implements OnInit {
   }*/
 
 
+  isGameOver(){
+    let result = true;
+    if (this.isFull() === false){
+      return false;
+    }
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (tileIndex > 0 && this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex-1]){
+          return false;
+        }
+        if (tileIndex < size-1 && this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex+1]){
+          return false;
+        }
+        if (rowIndex > 0 && this.field[rowIndex][tileIndex] === this.field[rowIndex-1][tileIndex]){
+          return false;
+        }
+        if (rowIndex < size-1 && this.field[rowIndex][tileIndex] === this.field[rowIndex+1][tileIndex]){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private isFull() {
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (this.field[rowIndex][tileIndex] === null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   newGame() {
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
       for (let tileIndex = 0; tileIndex < size; tileIndex++){

@@ -11,6 +11,8 @@
          [style.width.px] = "tileWidth"> <div class="fill"></div></div>
   </div>
 
+  <div *ngIf="isGameOver() === true"> LOL </div>
+
   <div class = "row" *ngFor = "let row of fieldView; let rowIndex = index">
     <div class = "tile" *ngFor = "let tile of row; let tileIndex = index"
         [@tile] = "animationsView[rowIndex][tileIndex]"
