@@ -470,19 +470,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  /*isGameOver(){
-    boolean result = true;
-    for (let rowIndex = 0; rowIndex < size; rowIndex++){
-      for (let tileIndex = 0; tileIndex < size; tileIndex++){
-        if (this.field[rowIndex][tileIndex] === this.field[rowIndex-1][tileIndex] || this.field[rowIndex][tileIndex] === this.field[rowIndex+1][tileIndex] || this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex-1] || this.field[rowIndex][tileIndex] === this.field[rowIndex][tileIndex+1] ) {
-          result = false;
-        }
-      }
-    }
-    return result;
-  }*/
-
-
   isGameOver(){
     let result = true;
     if (this.isFull() === false){
@@ -531,14 +518,35 @@ export class BoardComponent implements OnInit {
     this.resetCurrentScore();
   }
 
-  bombAttack() {
+  private findMin() {
+    let tmp = 0;
+    let min = 2;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
       for (let tileIndex = 0; tileIndex < size; tileIndex++){
-        if (this.field[rowIndex][tileIndex] !== null && this.field[rowIndex][tileIndex] === 2){
+        if (this.field[rowIndex][tileIndex] !== null && tmp === 0){
+            min = this.field[rowIndex][tileIndex];
+            tmp ++;
+        }
+
+        if ( this.field[rowIndex][tileIndex] !== null && this.field[rowIndex][tileIndex] < min ) {
+            min = this.field[rowIndex][tileIndex];
+        }
+      }
+    }
+    return min;
+}
+  bombAttack() {
+    let minVal = this.findMin();
+
+    for (let rowIndex = 0; rowIndex < size; rowIndex++){
+      for (let tileIndex = 0; tileIndex < size; tileIndex++){
+        if (this.field[rowIndex][tileIndex] !== null && this.field[rowIndex][tileIndex] === minVal){
             this.field[rowIndex][tileIndex] = null;
         }
       }
     }
+
+    this.currentScore -= minVal*100;
 
     let empty = true;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
