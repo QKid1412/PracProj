@@ -11,8 +11,6 @@
          [style.width.px] = "tileWidth"> <div class="fill"></div></div>
   </div>
 
-  <div *ngIf="isGameOver() === true"> LOL </div>
-
   <div class = "row" *ngFor = "let row of fieldView; let rowIndex = index">
     <div class = "tile" *ngFor = "let tile of row; let tileIndex = index"
         [@tile] = "animationsView[rowIndex][tileIndex]"
@@ -24,12 +22,33 @@
         <div class="fill" [ngClass] = "'-color-' + tile"> {{ tile }}</div>
       </div>
   </div>
+
+  <div *ngIf="isGameOver() === true" class="gameover-container">
+    <div id="content">
+      <div class="gameover">
+        <p> GAME OVER </p>
+      </div>
+      <div class="continue"> <p> Press <span>B</span> or Click <span>Boom</span> to continue</p> </div>
+      <div class="continue"> <p> Press <span>N</span> or Click <span>New Game</span> to restart</p> </div>
+
+      <!--
+      <div class="opcoes">
+        <div class="yes"> New Game </div>
+        <div class="no"> Boom Boom! </div>
+      </div>-->
+    </div>
+    <div id="background"></div>
+  </div>
+
 </div>
+
 
 <div class = "actions">
   <button (click) ="newGame()" class="restart-button"> NEW GAME </button>
   <button (click) ="bombAttack()" class="eliminate-button"> BOOM! </button>
 </div>
+
+
 
 <!--<div class = "actions">
   <button (click) ="fillRandom()" > Create random tile </button>
