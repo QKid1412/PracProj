@@ -3,7 +3,43 @@
      <div class="best-container">{{highestScore}}</div>
 </div>
 
+<div class="info">
+  <h3> INFO </h3>
+  <p class="infotext">
+    &diams; &nbsp; Use <span>arrowKeys</span> to move directions <br/>
+    &diams; &nbsp; <span>BOOM</span> button takes away scores but eliminates smallest values from board <br/>
+    &diams; &nbsp; <span>NEW GAME</span> button allows you to restart the game <br/>
+    &diams; &nbsp; You can always press <span>B</span> to Boom and <span>R</span> to restart <br/>
+    &diams; &nbsp; Start Playing and Merge your tiles!
+
+  </p>
+</div>
+
 <div class="board" >
+
+  <div class="contenedor">
+    <div class="todo">
+      <div class="dog">
+        <span class="leg3"></span>
+        <div class="body"><span class="cola"></span><span class="leg"></span></div>
+          <div class="cabezota">
+            <div class="orejas"><span class="orejitas"></span></div>
+            <div class="orejas3"><span class="orejitas3"></span></div>
+            <div class="cabeza">
+              <span class="cabeza3"></span>
+              <span class="ojos"><span class="iris"></span></span>
+              <span class="nariz"></span>
+              <span class="nariz3"></span>
+          </div>
+        </div>
+
+        <div class="canasta"></div>
+
+      </div>
+    </div>
+  </div>
+
+
   <div class = "grid-row" *ngFor = "let row of grid">
     <div class = "grid-tile"
         *ngFor = "let tile of row"
@@ -47,7 +83,6 @@
   <button (click) ="newGame()" class="restart-button"> NEW GAME </button>
   <button (click) ="bombAttack()" class="eliminate-button"> BOOM! </button>
 </div>
-
 
 
 <!--<div class = "actions">

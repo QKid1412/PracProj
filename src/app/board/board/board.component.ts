@@ -546,7 +546,7 @@ export class BoardComponent implements OnInit {
       }
     }
 
-    this.currentScore -= minVal*100;
+    this.currentScore -= minVal*10;
 
     let empty = true;
     for (let rowIndex = 0; rowIndex < size; rowIndex++){
